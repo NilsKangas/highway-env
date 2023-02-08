@@ -90,7 +90,7 @@ class HighwayEnv(AbstractEnv):
         neighbours = self.road.network.all_side_lanes(self.vehicle.lane_index)
         lane = self.vehicle.target_lane_index[2] if isinstance(self.vehicle, ControlledVehicle) \
             else self.vehicle.lane_index[2]
-        lane_change = action == 0 or action == 2
+        lane_change = (action == 0) or (action == 2)
         scaled_speed = utils.lmap(self.vehicle.speed, self.config["reward_speed_range"], [0, 1])
         reward = \
             + [self.config["collision_reward"] * self.vehicle.crashed \
@@ -98,7 +98,7 @@ class HighwayEnv(AbstractEnv):
             + self.config["high_speed_reward"] * np.clip(scaled_speed, 0, 1) \
             + self.config["lane_change_reward"] * lane_change   #action_type.lateral
 
-               #   rewards = self._rewards(action)
+     #   rewards = self._rewards(action)
      #   reward = sum(self.config.get(name, 0) * reward for name, reward in rewards.items())
 
      #   if self.config["normalize_reward"]:
